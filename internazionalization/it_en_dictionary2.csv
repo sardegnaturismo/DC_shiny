@@ -1,0 +1,158 @@
+key;it;en
+header_title;Sistema interattivo di analisi e visualizzazione dei dati sul movimento turistico della Sardegna;Interactive system for analisys and visualization of Sardinian tourism data
+sired;SIRED;SIRED
+fonte;Fonte:;Source:
+misura;Selezionare la misura di analisi:;Select analysis measure:
+arrivi;Arrivi;Arrivals
+presenze;Presenze;Presences
+map_bar_region;Visualizza i dati turistici dell'intera <strong> Sardegna</strong> scorrendo in basso la pagina oppure seleziona una <strong>provincia</strong> nella mappa;Display <strong>Sardinian</strong> tourism data scrolling down the page or select a <strong>province</strong> in the map
+map_bar_province1;Visualizza i dati turistici della provincia;Display
+map_bar_province2;scorrendo in basso la pagina oppure seleziona un <strong>comune</strong> nella mappa;tourism data scrolling down the page or select a <strong>town</strong> in the map
+map_bar_mun1;Visualizza i dati turistici e le strutture ricettive del comune di;Display
+map_bar_mun2;scorrendo in basso la pagina;'s tourism data scrolling down the page
+disclaimer;<strong>Nota bene</strong>: i dati visualizzati sono relativi al seguente tasso di copertura calcolato sui letti delle strutture ricettive; Note well: data refers to the following coverage rate based on the occupancy rate of bed places in hotels and similar accomodation.
+Cagliari;Cagliari;Cagliari's
+Oristano;Oristano;Oristano's
+Nuoro;Nuoro;Nuoro's
+Sassari;Sassari;Sassari's
+Olbia-Tempio;Olbia-Tempio;Olbia-Tempio's
+Carbonia-Iglesias;Carbonia-Iglesias;Carbonia-Iglesias'
+Medio Campidano;Medio Campidano;Medio Campidano's
+Ogliastra;Ogliastra;Ogliastra's
+elimina_filtri_mappe;Elimina filtri mappe;Remove maps filter
+provenience_bar;Seleziona la provenienza cliccando sugli elementi dei grafici;Select an origin by clicking on the graphic elements
+profiling_bar_title;Seleziona il tipo di turista (dato riferito ai soli arrivi);Select a tourist type (informations referred only to arrivals)
+elimina_filtri_provenienza;Elimina filtro provenienza;Remove filter by origin
+elimina_filtri_profilazione;Elimina filtro sesso;Remove sex filter
+elimina_filtri_alloggiato;Elimina filtro tipo alloggiato;Remove accomodated type filter
+numero_arrivi;Numero di Arrivi;Number of Arrivals
+numero_presenze;Numero di Presenze;Number of Presences
+distribuzione_provenienza;Distribuzione per paese di provenienza;Origin distribution
+distribuzione_per_stato;Distribuzione per stato estero di provenienza;Foreign distribution by State of origin
+distribuzione_per_regione;Distribuzione per regione italiana di provenienza;Italian distribution by Region of origin
+andamento_triennio;Andamento ultimo triennio;Trend of the last three years
+distribuzione_per_sesso;Distribuzione per sesso;Sex distribution
+distribuzione_per_alloggiato;Distribuzione per tipo di alloggiato;Type distribution
+distribuzione_per_eta;Distribuzione per fascia di età;Distribution by age range
+maschio;Maschio;Male
+femmina;Femmina;Female
+capofamiglia;Capo Famiglia;Head of the family
+capogruppo;Capo Gruppo;Group Leader
+famigliare;Famigliare;Family Member
+membrogruppo;Membro Gruppo;Group Member
+ospitesingolo;Ospite Singolo;Single Guest
+gennaio;Gennaio;January
+febbraio;Febbraio;February
+marzo;Marzo;March
+aprile;Aprile;April
+maggio;Maggio;May
+giugno;Giugno;June
+luglio;Luglio;July
+agosto;Agosto;August
+settembre;Settembre;September
+ottobre;Ottobre;October
+novembre;Novembre;November
+dicembre;Dicembre;December
+bulgaria;Bulgaria;Bulgaria
+croazia;Croazia;Croatia
+spagna;Spagna;Spain
+estonia;Estonia;Estonia
+altripaesioterritoridell'oceania;Altri Paesi o territori dell'Oceania;Other countries or territories of Oceania
+sardegna;Sardegna;Sardinia
+islanda;Islanda;Iceland
+svizzera(inclusoliechtenstein);Svizzera (incluso Liechtenstein);Switzerland (including Liechtenstein)
+lituania;Lituania;Lithuania
+portogallo;Portogallo;Portugal
+lussemburgo;Lussemburgo;Luxembourg
+venezuela;Venezuela;Venezuela
+giappone;Giappone;Japan
+egitto;Egitto;Egypt
+grecia;Grecia;Greece
+svezia;Svezia;Sweden
+brasile;Brasile;Brazil
+norvegia;Norvegia;Norway
+sudafrica;Sud Africa;South Africa
+belgio;Belgio;Belgium
+francia;Francia;France
+cipro;Cipro;Cyprus
+malta;Malta;Malta
+altripaesidell'africa;Altri Paesi dell'Africa;Other African Countries
+statiunitid'america;Stati Uniti d'America;United States of America
+coreadelsud;Corea del Sud;South Korea
+india;India;India
+lettonia;Lettonia;Latvia
+slovacchia;Slovacchia;Slovakia
+slovenia;Slovenia;Slovenia
+messico;Messico;Mexico
+bielorussia;Bielorussia;Belarus
+altripaesioterritoridelnordamericani;Altri Paesi o territori del Nord Americani;Other countries or North American territories
+altripaesidell'asia;Altri Paesi dell'Asia;Other Asian countries
+nuovazelanda;Nuova Zelanda;New Zeland
+moldavia;Moldavia;Moldova
+nonspecificato;Non specificato;Not specified
+austria;Austria;Austria
+canada;Canada;Canada
+estero;Estero;Foreign countries
+germania;Germania;Germany
+polonia;Polonia;Poland
+israele;Israele;Israel
+australia;Australia;Australia
+cina;Cina;China
+finlandia;Finlandia;Finland
+altripaesiafricamediterranea;Altri Paesi Africa Mediterranea;Other countries Mediterranean Africa
+altripaesieuropei;Altri Paesi Europei;Other European Countries
+regnounito;Regno Unito;The UK
+romania;Romania;Romania
+turchia;Turchia;Turkey
+altripaesiasiaoccidentale;Altri Paesi Asia Occidentale;Other Countries Asia
+ungheria;Ungheria;Hungary
+veneto;Veneto;Veneto
+ucraina;Ucraina;Ukraine
+danimarca;Danimarca;Denmark
+paesibassi;Paesi Bassi;Netherlands
+repubblicaceca;Repubblica Ceca;Czech Republic
+irlanda;Irlanda;Ireland
+altripaesicentro-sudamerica;Altri Paesi Centro - Sud America;Other countries Center - South America
+russia;Russia;Russia
+argentina;Argentina;Argentine
+marche;Marche;Marche
+trento;Trento;Trento
+lombardia;Lombardia;Lombardy
+sicilia;Sicilia;Sicily
+lazio;Lazio;Lazio
+basilicata;Basilicata;Basilicata
+piemonte;Piemonte;Piedmont
+emiliaromagna;Emilia Romagna;Emilia Romagna
+abruzzo;Abruzzo;Abruzzo
+umbria;Umbria;Umbria
+italia;Italia;Italy
+bolzano;Bolzano;Bolzano
+puglia;Puglia;Apulia
+valled'aosta;Valle d'Aosta;Aosta Valley
+molise;Molise;Molise
+calabria;Calabria;Calabria
+toscana;Toscana;Tuscany
+liguria;Liguria;Liguria
+campania;Campania;Campania
+friuli-veneziagiulia;Friuli-Venezia Giulia;Friuli-Venezia Giulia
+fascia_eta;Fascia d'età;Age range
+denominazione;<b>Denominazione: </b>;<b>Name: </b>
+tipologia;<b>Tipologia: </b>;<b>Type: </b>
+classificazione;<b>Classificazione: </b>;<b>Category: </b>
+mesi_apertura;<b>Mesi di apertura: </b>;<b>Months of opening: </b>
+posti_letto;<b>Posti letto: </b>;<b>Beds: </b>
+anno;Anno;Year
+mese;Mese;Month
+copertura;Copertura (%);Coverage (%)
+copertura_mese;Copertura del mese di;Coverage in month of
+dettagli;Dettagli;Details
+chiudi;Chiudi;Close
+cerca;Cerca;Search
+mostra_elementi;Mostra _MENU_ mesi; Show _MENU_ months
+successivo;Successivo;Next
+precedente;Precedente;Previous
+maschi;Maschi;Males
+femmine;Femmine;Females
+diagramma_sesso_nd;Dato sulla distribuzione per sesso non disponibile;Sex distribution not available
+diagramma_tipoalloggiato_nd;Dato sulla distribuzione del tipo alloggiato non disponibile;Accomodated type distribution not available
+diagramma_agerange_nd; Dato sulla distribuzione delle fasce di età non disponibile;Age range distribution not available
