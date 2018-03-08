@@ -1,0 +1,15 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+DO_shiny.Rproj
+test.R
+test2.R
+test3.R
+test4.R
+packrat/lib*/
+data/*
+!data/.gitkeep
+internazionalization/*.bin
+Rprof.out
