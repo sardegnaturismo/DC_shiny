@@ -40,6 +40,9 @@ coverage <- fread("data/copertura_sardegna.csv", colClasses = c("codicecomune" =
 ### load translation file ###
 load("internazionalization/translation.bin")
 
+### load time interval file
+load("r_data/time_interval.RData")
+
 
 shinyServer(function(input, output, session) {
         
@@ -384,7 +387,7 @@ shinyServer(function(input, output, session) {
           print(selections)
           province_abbreviation <- selections[[1]]
           municipality_code <- selections[[2]]
-          coverage = get_current_coverage(coverage, province_abbreviation, municipality_code)
+          coverage = get_current_coverage(coverage, province_abbreviation, municipality_code, (current_year + 1))
           mese = tr(tolower(coverage[[1]]), change$language)
           copertura = coverage[[2]]
           print(paste("copertura is null: ", is.null(copertura)))
@@ -405,7 +408,7 @@ shinyServer(function(input, output, session) {
             selections <- map$selected_params
             province_abbreviation <- selections[[1]]
             municipality_code <- selections[[2]]
-            coverage <- get_coverage(coverage, province_abbreviation, municipality_code)
+            coverage <- get_coverage(coverage, province_abbreviation, municipality_code, (current_year + 1))
             names(coverage) = c(tr("anno", change$language), tr("mese", change$language), tr("copertura", change$language))
             coverage
         }, options = list(lengthMenu = c(3, 6, 12), pageLength = 3, columnDefs = list(list(targets = "_all", searchable = FALSE)), 
@@ -428,7 +431,7 @@ shinyServer(function(input, output, session) {
                         measure = input$measure
                 }
                 print(paste("measure inside proveniences: ", measure))
-                proveniences <- get_global_proveniences(aggregate_movements, province_abbreviation, municipality_code, measure)
+                proveniences <- get_global_proveniences(aggregate_movements, province_abbreviation, municipality_code, measure, current_year)
                 if (change$language == "en"){
                         proveniences$provenienza <- translate_vector(proveniences$provenienza, change$language)
                 }
@@ -509,7 +512,7 @@ shinyServer(function(input, output, session) {
                 }
                 print(paste("measure inside prov by nation: ", measure))
                 ##################
-                provenience_by_nation <- get_provenience_by_nation(aggregate_movements, province_abbreviation, municipality_code, measure)
+                provenience_by_nation <- get_provenience_by_nation(aggregate_movements, province_abbreviation, municipality_code, measure, current_year)
                 plot_title <- tr("distribuzione_per_stato", change$language)
                 y_axis_title <- measure
                 ### axis params ###
@@ -597,7 +600,7 @@ shinyServer(function(input, output, session) {
           
                 print(paste("measure inside prov by region: ", measure))
 
-                prov_by_region <- get_provenience_by_region(aggregate_movements, province_abbreviation, municipality_code, measure)
+                prov_by_region <- get_provenience_by_region(aggregate_movements, province_abbreviation, municipality_code, measure, current_year)
                 
                 if (change$language == "en"){
                   prov_by_region$regione <- translate_vector(prov_by_region$regione, change$language)
@@ -801,7 +804,7 @@ shinyServer(function(input, output, session) {
         output$trend_comparison <- renderPlotly({
                 province_abbreviation <- NULL
                 municipality_code <- NULL
-                month_range <- get_month_range(aggregate_movements)
+                month_range <- get_month_range(aggregate_movements, current_year)
                 
                 #selections <- get_map_selections(data$clickedProvince[["id"]], data$clickedMunicipality[["id"]], sardinian_provinces)
                 selections <- map$selected_params
@@ -822,6 +825,7 @@ shinyServer(function(input, output, session) {
                 ### plotly events from nations and regions bar chart
                 nation_ev <- nation_bar$ev
                 region_ev <- region_bar$ev
+                
                 trends <- get_last_three_years(aggregate_movements, province_abbreviation, municipality_code, measure, ev, nation_ev, region_ev, change$language)
                 print("**** Trends")
                 print(trends)
@@ -841,17 +845,22 @@ shinyServer(function(input, output, session) {
                 # mesi3 <- translate_vector(trends3$mese, change$language) 
                 # trends3$mese <- factor(x = mesi3, levels = mesi3)
                ##############################################
-                trends1 <- filter(trends, periodo == "anno1") ### last year
+                #change time interval
+                
+                #trends1 <- filter(trends, periodo == "anno1") ### last year
+                trends1 <- filter(trends, anno == current_year) ### last year
                 mesi1 <- translate_vector(trends1$mese, change$language)
                 m1 <- factor(mesi1, levels = mesi1)
                 intervallo1 <- trends1$intervallo[1]
                 
-                trends2 <- filter(trends, periodo == "anno2")
+                #trends2 <- filter(trends, periodo == "anno2")
+                trends2 <- filter(trends, anno == (current_year - 1))
                 mesi2 <- translate_vector(trends2$mese, change$language) #past years
                 m2 <- factor(mesi2, levels = mesi2)
                 intervallo2 <- trends2$intervallo[1]
                 
-                trends3 <- filter(trends, periodo == "anno3")
+                #trends3 <- filter(trends, periodo == "anno3")
+                trends3 <- filter(trends, anno == (current_year - 2))
                 mesi3 <- translate_vector(trends3$mese, change$language) ### past years
                 m3 <- factor(mesi3, levels = mesi3)
                 intervallo3 <- trends3$intervallo[1]

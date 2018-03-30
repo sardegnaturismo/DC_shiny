@@ -152,8 +152,10 @@ get_language <- function(language = "it"){
 language = get_language()
 
 
-get_month_range <- function(dataset = aggregate_movements){
-  x <- filter(dataset, periodo == "anno1")
+get_month_range <- function(dataset = aggregate_movements, current_year){
+  #x <- filter(dataset, periodo == "anno1")
+  #change time interval for the "dashboard cittadino"
+  x <- filter(dataset, anno_rif == current_year)
   mapping <- unique(cbind(x$mese, x$mesestr_ita, x$anno_rif))
   mapping <- data.frame(mapping)
   names(mapping) <- c("mese", "mesestr", "anno")

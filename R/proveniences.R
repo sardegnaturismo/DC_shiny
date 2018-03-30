@@ -1,10 +1,13 @@
-get_global_proveniences <- function(dataset, province_abbreviation, municipality_code, measure){
+get_global_proveniences <- function(dataset, province_abbreviation, municipality_code, measure, current_year){
+        #browser()
         dataset <- filter_dataset(dataset, province_abbreviation, municipality_code)
         # italians <- dataset %>% filter(grepl("^9", codicenazione)) %>% filter(!grepl("^999", codicenazione)) %>% filter(periodo == "anno1") 
         # foreigners <- dataset %>% filter(!grepl("^9", codicenazione)) %>% filter(periodo == "anno1")
-
-        italians <- dataset %>% filter(grepl("^999$", codicenazione)) %>% filter(periodo == "anno1")
-        foreigners <- dataset %>% filter(grepl("9999", codicenazione)) %>% filter(periodo == "anno1")
+        
+        #DC has ad different way to compute temporal interval##
+        #in this case we filter by anno_rif 
+        italians <- dataset %>% filter(grepl("^999$", codicenazione)) %>% filter(anno_rif == current_year)
+        foreigners <- dataset %>% filter(grepl("9999", codicenazione)) %>% filter(anno_rif == current_year)
         if (nrow(italians) > 0){
           italians$descrizione = "Italia"
         }
@@ -39,8 +42,7 @@ get_global_proveniences <- function(dataset, province_abbreviation, municipality
         proveniences
 }
 
-get_current_coverage <- function(dataset, province_abbreviation = NULL, municipality_code = NULL){
-
+get_current_coverage <- function(dataset, province_abbreviation = NULL, municipality_code = NULL, current_year){
    if (is.null(province_abbreviation)){
      dataset <- filter(dataset, provincia == '')
    }else if (!is.null(province_abbreviation)){
@@ -54,12 +56,17 @@ get_current_coverage <- function(dataset, province_abbreviation = NULL, municipa
      }
    }
 
-  current_coverage <- filter(dataset, periodo == "anno1" & anno_rif == max(as.numeric(anno_rif))) %>% filter(mese == max(as.numeric(mese))) %>% select(c("mesestr_ita", "copertura"))
+  #current_coverage <- filter(dataset, periodo == "anno1" & anno_rif == max(as.numeric(anno_rif))) %>% filter(mese == max(as.numeric(mese))) %>% select(c("mesestr_ita", "copertura"))
+  ##### change time interval ####
+  current_coverage <- filter(dataset, ann_rif == current_year) %>% filter(mese == max(as.numeric(mese))) %>% select(c("mesestr_ita", "copertura"))
+  
   # current_coverage = select(filter(dataset, periodo == 'anno1' & anno_rif == max(anno_rif) & mese == max(mese)), c("mesestr_ita", "copertura"))    
 
   names(current_coverage) <- c("mese", "copertura")
   if(nrow(current_coverage) == 0){
-    current_month <- filter(dataset, periodo == "anno1" & anno_rif == max(as.numeric(anno_rif))) %>% filter(provincia == '' & mese == max(as.numeric(mese))) %>% select(c("mesestr_ita")) 
+    #current_month <- filter(dataset, periodo == "anno1" & anno_rif == max(as.numeric(anno_rif))) %>% filter(provincia == '' & mese == max(as.numeric(mese))) %>% select(c("mesestr_ita")) 
+    ### change time interval ####
+    current_month <- filter(dataset, anno_rif == current_year) %>% filter(provincia == '' & mese == max(as.numeric(mese))) %>% select(c("mesestr_ita"))    
     current_coverage[1,1] = current_month
     current_coverage[1,2] = ""
   }
@@ -68,17 +75,20 @@ get_current_coverage <- function(dataset, province_abbreviation = NULL, municipa
 }
 
 
-get_coverage <- function(dataset, province_abbreviation = NULL, municipality_code = NULL){
+get_coverage <- function(dataset, province_abbreviation = NULL, municipality_code = NULL, current_year){
+
+  #### change time interval #####
   if (is.null(province_abbreviation)){
-    dataset <- filter(dataset, periodo == "anno1" & provincia == '') %>% arrange(desc(as.numeric(anno_rif)), desc(as.numeric(mese)))
+    #dataset <- filter(dataset, periodo == "anno1" & provincia == '') %>% arrange(desc(as.numeric(anno_rif)), desc(as.numeric(mese)))
+    dataset <- filter(dataset, anno_rif == current_year & provincia == '') %>% arrange(desc(as.numeric(mese)))
   }else{
     if (is.null(municipality_code)){
-      dataset <- filter(dataset, periodo == "anno1" & provincia == province_abbreviation & codicecomune == '') %>% arrange(desc(as.numeric(anno_rif)), desc(as.numeric(mese)))
+      dataset <- filter(dataset, anno_rif == current_year & provincia == province_abbreviation & codicecomune == '') %>% arrange(desc(as.numeric(mese)))
     }else{
       if (substring(municipality_code, 1, 1) == "9"){
         municipality_code = paste("0", municipality_code, sep = '')
       }
-      dataset <- filter(dataset, periodo == "anno1" & provincia == province_abbreviation & codicecomune == municipality_code) %>% arrange(desc(as.numeric(anno_rif)), desc(as.numeric(mese)))
+      dataset <- filter(dataset, anno_rif == current_year & provincia == province_abbreviation & codicecomune == municipality_code) %>% arrange(desc(as.numeric(mese)))
       
     }
   }
@@ -99,9 +109,11 @@ get_coverage <- function(dataset, province_abbreviation = NULL, municipality_cod
   coverage
 }
 
-get_provenience_by_nation <- function(dataset, province_abbreviation, municipality_code, measure){
+get_provenience_by_nation <- function(dataset, province_abbreviation, municipality_code, measure, current_year){
         dataset <- filter_dataset(dataset, province_abbreviation, municipality_code)
-        foreigners <- dataset %>% filter(!grepl("^9", codicenazione)) %>% filter(periodo == "anno1")
+        #foreigners <- dataset %>% filter(!grepl("^9", codicenazione)) %>% filter(periodo == "anno1")
+        ###change of the time interval
+        foreigners <- dataset %>% filter(!grepl("^9", codicenazione)) %>% filter(anno_rif == current_year)        
         dependent_variable <- foreigners$tot_arrivi
         measure = tolower(measure)
         if (!is.null(measure) || measure != "") {
@@ -127,9 +139,10 @@ get_provenience_by_nation <- function(dataset, province_abbreviation, municipali
 
 }
 
-get_provenience_by_region <- function(dataset, province_abbreviation, municipality_code, measure){
+get_provenience_by_region <- function(dataset, province_abbreviation, municipality_code, measure, current_year){
         dataset <- filter_dataset(dataset, province_abbreviation, municipality_code)  
-        italians_all <- dataset %>% filter(grepl("^9", codicenazione)) %>% filter(!grepl("9999", codicenazione)) %>% filter(periodo == "anno1")
+        #italians_all <- dataset %>% filter(grepl("^9", codicenazione)) %>% filter(!grepl("9999", codicenazione)) %>% filter(periodo == "anno1")
+        italians_all <- dataset %>% filter(grepl("^9", codicenazione)) %>% filter(!grepl("9999", codicenazione)) %>% filter(anno_rif == current_year)        
         italians <- italians_all %>% filter(!grepl("Italia", descrizione)) %>% filter(!grepl("Estero", descrizione))
         
         dependent_variable <- italians$tot_arrivi
