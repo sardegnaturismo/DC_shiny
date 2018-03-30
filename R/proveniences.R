@@ -43,6 +43,7 @@ get_global_proveniences <- function(dataset, province_abbreviation, municipality
 }
 
 get_current_coverage <- function(dataset, province_abbreviation = NULL, municipality_code = NULL, current_year){
+  
    if (is.null(province_abbreviation)){
      dataset <- filter(dataset, provincia == '')
    }else if (!is.null(province_abbreviation)){
@@ -58,7 +59,7 @@ get_current_coverage <- function(dataset, province_abbreviation = NULL, municipa
 
   #current_coverage <- filter(dataset, periodo == "anno1" & anno_rif == max(as.numeric(anno_rif))) %>% filter(mese == max(as.numeric(mese))) %>% select(c("mesestr_ita", "copertura"))
   ##### change time interval ####
-  current_coverage <- filter(dataset, ann_rif == current_year) %>% filter(mese == max(as.numeric(mese))) %>% select(c("mesestr_ita", "copertura"))
+  current_coverage <- filter(dataset, anno_rif == current_year) %>% filter(mese == max(as.numeric(mese))) %>% select(c("mesestr_ita", "copertura"))
   
   # current_coverage = select(filter(dataset, periodo == 'anno1' & anno_rif == max(anno_rif) & mese == max(mese)), c("mesestr_ita", "copertura"))    
 

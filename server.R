@@ -851,19 +851,20 @@ shinyServer(function(input, output, session) {
                 trends1 <- filter(trends, anno == current_year) ### last year
                 mesi1 <- translate_vector(trends1$mese, change$language)
                 m1 <- factor(mesi1, levels = mesi1)
-                intervallo1 <- trends1$intervallo[1]
-                
+                #intervallo1 <- trends1$intervallo[1]
+                intervallo1 <- current_year
                 #trends2 <- filter(trends, periodo == "anno2")
                 trends2 <- filter(trends, anno == (current_year - 1))
                 mesi2 <- translate_vector(trends2$mese, change$language) #past years
                 m2 <- factor(mesi2, levels = mesi2)
-                intervallo2 <- trends2$intervallo[1]
-                
+                #intervallo2 <- trends2$intervallo[1]
+                intervallo2 <- current_year - 1
                 #trends3 <- filter(trends, periodo == "anno3")
                 trends3 <- filter(trends, anno == (current_year - 2))
                 mesi3 <- translate_vector(trends3$mese, change$language) ### past years
                 m3 <- factor(mesi3, levels = mesi3)
-                intervallo3 <- trends3$intervallo[1]
+                #intervallo3 <- trends3$intervallo[1]
+                intervallo3 <- current_year - 2 
                 
                 month_list <- list(m1, m2, m3)
                 reference_month_list <- get_longest_vector(month_list)
