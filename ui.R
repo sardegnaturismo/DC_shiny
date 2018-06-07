@@ -163,5 +163,16 @@ shinyUI(fluidPage(
                   plotlyOutput("age_range")
           )
   )
+  # fluidRow(
+  #   column(
+  #     width = 6, align = "center",
+  #     tags$a(href = "/data/provinciali.csv", "Esporta dati provinciali")
+  #   ),
+  #   column(
+  #     width = 6, align = "center",
+  #     tags$a(href = "/data/comunali.csv", "Esporta dati comunali")
+  #     
+  #     )
+  # )
                   
 ))

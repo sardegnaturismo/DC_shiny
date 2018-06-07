@@ -31,10 +31,10 @@ sardinian_provinces <- subset(provinces, provinces$PROVINCIA %in% c("Sassari", "
                                                                     "Medio Campidano", "Carbonia-Iglesias"))
 #municipalities <- readOGR("shapes/Com2016_rprj.shp", encoding = "UTF-8", use_iconv = T)
 municipalities <- readOGR("shapes/SardCom2016_rprj.shp", encoding = "UTF-8", use_iconv = T)
-aggregate_movements <- read.csv("data/agg_ope_line_20xx.csv", encoding = "UTF-8", stringsAsFactors = F, colClasses = c("codicecomune" = "character", "mese" = "character", "codicenazione" = "character"))
-aggregate_web_data <- read.csv("data/agg_ope_web.csv", encoding = "UTF-8", stringsAsFactors = F, colClasses = c("codicecomune" = "character", "codiceluogo" = "character", "sesso" = "character", "tipoalloggiato" = "character"))
-map_threshold <- read.csv("data/soglia_map_prov_com_ope.csv", encoding = "UTF-8", colClasses = c("codicecomune" = "character", "anno" = "character"))
-structures <- read.csv("data/struttura_info_ope.csv", stringsAsFactors = F, colClasses = c("id_struttura" = "character", "cod_com" = "character", "lat" = "character", "lon" = "character"))
+aggregate_movements <- read.csv("data/agg_citt_line_20xx.csv", encoding = "UTF-8", stringsAsFactors = F, colClasses = c("codicecomune" = "character", "mese" = "character", "codicenazione" = "character"))
+aggregate_web_data <- read.csv("data/agg_citt_web.csv", encoding = "UTF-8", stringsAsFactors = F, colClasses = c("codicecomune" = "character", "codiceluogo" = "character", "sesso" = "character", "tipoalloggiato" = "character"))
+map_threshold <- read.csv("data/soglia_map_prov_com_citt.csv", encoding = "UTF-8", colClasses = c("codicecomune" = "character", "anno" = "character"))
+structures <- read.csv("data/struttura_info_citt.csv", stringsAsFactors = F, colClasses = c("id_struttura" = "character", "cod_com" = "character", "lat" = "character", "lon" = "character"))
 coverage <- fread("data/copertura_sardegna.csv", colClasses = c("codicecomune" = "character"))
 
 ### load translation file ###
@@ -387,7 +387,7 @@ shinyServer(function(input, output, session) {
           print(selections)
           province_abbreviation <- selections[[1]]
           municipality_code <- selections[[2]]
-          coverage = get_current_coverage(coverage, province_abbreviation, municipality_code, (current_year + 1))
+          coverage = get_current_coverage(coverage, province_abbreviation, municipality_code, (current_year))
           mese = tr(tolower(coverage[[1]]), change$language)
           copertura = coverage[[2]]
           print(paste("copertura is null: ", is.null(copertura)))
@@ -408,7 +408,7 @@ shinyServer(function(input, output, session) {
             selections <- map$selected_params
             province_abbreviation <- selections[[1]]
             municipality_code <- selections[[2]]
-            coverage <- get_coverage(coverage, province_abbreviation, municipality_code, (current_year + 1))
+            coverage <- get_coverage(coverage, province_abbreviation, municipality_code, (current_year))
             names(coverage) = c(tr("anno", change$language), tr("mese", change$language), tr("copertura", change$language))
             coverage
         }, options = list(lengthMenu = c(3, 6, 12), pageLength = 3, columnDefs = list(list(targets = "_all", searchable = FALSE)), 
@@ -888,6 +888,37 @@ shinyServer(function(input, output, session) {
                                xaxis = xform,
                                yaxis = list (title = y_axix_title)) %>% config(displaylogo = F, collaborate = F, modeBarButtonsToRemove = list("zoom2d", "zoomIn2d", "zoomOut2d", "toImage", "select2d", "lasso2d", "resetScale2d"))      
         })
+        
+        
+        #### Download file csv #### 
+        
+        # Reactive value for selected dataset ----
+        # datasetInput <- reactive({
+        #   switch(input$dataset,
+        #          "Dati Provinciali" = dati_provinciali,
+        #          "Dati Comunali" = dati_comunali)
+        # })
+        # 
+        # output$table <- renderTable({
+        #   if (input$dataset == "Dati Provinciali"){
+        #     rock
+        #   }else{
+        #     cars
+        #   }
+        #   
+        #   
+        # })
+        # 
+        # 
+        # output$downloadData <- downloadHandler(
+        #   filename = function() {
+        #     paste(input$dataset, ".csv", sep = "")
+        #   },
+        #   content = function(file) {
+        #     write.csv(datasetInput(), file, row.names = FALSE)
+        #   }
+        # )
+        
         
         
         # observeEvent(input$province_map_shape_click, { # update the location selectInput on map clicks
