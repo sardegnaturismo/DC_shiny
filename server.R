@@ -36,6 +36,8 @@ aggregate_web_data <- read.csv("data/agg_citt_web.csv", encoding = "UTF-8", stri
 map_threshold <- read.csv("data/soglia_map_prov_com_citt.csv", encoding = "UTF-8", colClasses = c("codicecomune" = "character", "anno" = "character"))
 structures <- read.csv("data/struttura_info_citt.csv", stringsAsFactors = F, colClasses = c("id_struttura" = "character", "cod_com" = "character", "lat" = "character", "lon" = "character"))
 coverage <- fread("data/copertura_sardegna.csv", colClasses = c("codicecomune" = "character"))
+download_com <- read.csv("data/comunali.csv")
+download_prov <- read.csv("data/provinciali.csv")
 
 ### load translation file ###
 load("internazionalization/translation.bin")
@@ -192,6 +194,14 @@ shinyServer(function(input, output, session) {
         
         output$provenience_filter_button <- renderUI({
                 generateFilterButton(change$language, "stop_provenience_filter", "elimina_filtri_provenienza")
+        })
+        
+        output$export_prov_button <- renderUI({
+                generateExportButton(change$language, "downloadProv", "esporta_prov")
+        })
+        
+        output$export_com_button <- renderUI({
+                generateExportButton(change$language, "downloadCom", "esporta_com")
         })
         
         output$profiling_bar_title <- renderUI({
@@ -409,6 +419,7 @@ shinyServer(function(input, output, session) {
             province_abbreviation <- selections[[1]]
             municipality_code <- selections[[2]]
             coverage <- get_coverage(coverage, province_abbreviation, municipality_code, (current_year))
+            coverage$mese <- sapply(coverage$mese, FUN = function(x){tr(tolower(x), change$language)})
             names(coverage) = c(tr("anno", change$language), tr("mese", change$language), tr("copertura", change$language))
             coverage
         }, options = list(lengthMenu = c(3, 6, 12), pageLength = 3, columnDefs = list(list(targets = "_all", searchable = FALSE)), 
@@ -890,6 +901,21 @@ shinyServer(function(input, output, session) {
         })
         
         
+        output$downloadProv <- downloadHandler(
+          filename = tr("download_provinciali", change$language),
+          content = function(file) {
+            write.csv(download_prov, file, row.names = FALSE)
+          }
+        )
+        
+        output$downloadCom <- downloadHandler(
+                filename = tr("download_comunali", change$language),
+                content = function(file) {
+                        write.csv(download_com, file, row.names = FALSE)
+                }
+        )
+        
+        
         #### Download file csv #### 
         
         # Reactive value for selected dataset ----
@@ -910,14 +936,8 @@ shinyServer(function(input, output, session) {
         # })
         # 
         # 
-        # output$downloadData <- downloadHandler(
-        #   filename = function() {
-        #     paste(input$dataset, ".csv", sep = "")
-        #   },
-        #   content = function(file) {
-        #     write.csv(datasetInput(), file, row.names = FALSE)
-        #   }
-        # )
+        
+        
         
         
         
