@@ -157,3 +157,7 @@ diagramma_sesso_nd;Dato sulla distribuzione per sesso non disponibile;Sex distri
 diagramma_tipoalloggiato_nd;Dato sulla distribuzione del tipo alloggiato non disponibile;Accomodated type distribution not available
 diagramma_agerange_nd; Dato sulla distribuzione delle fasce di età non disponibile;Age range distribution not available
 download_file_title;Scarica:; Download:
+download_comunali; dati_comunali.csv; municipal_data.csv
+download_provinciali; dati_provinciali.csv; provincial_data.csv
+esporta_prov; Esporta dati provinciali; Export provincial data
+esporta_com; Esporta dati comunali; Export municipal data
