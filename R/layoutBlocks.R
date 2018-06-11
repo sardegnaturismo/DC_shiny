@@ -27,3 +27,13 @@ generateFilterButton <- function(language, id, label){
         
         
 }
+
+generateExportButton <- function(language, id, label){
+        button_label <- tr(label, language)
+        downloadButton(id, label = button_label )
+}
+        
+
+
+
+
