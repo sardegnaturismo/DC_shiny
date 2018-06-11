@@ -162,17 +162,19 @@ shinyUI(fluidPage(
                   width = 12, 
                   plotlyOutput("age_range")
           )
+  ),br(), br(),
+  fluidRow(
+    column(
+      width = 4, offset = 2, align = "center",
+      uiOutput("export_prov_button")
+      #downloadButton("downloadProv", "Esporta dati provinciali")
+    ),
+    column(
+      width = 4, align = "center",
+      uiOutput("export_com_button")
+      #downloadButton("downloadCom", "Esporta dati comunali")
+
+      ),br(),br(),br(),br()
   )
-  # fluidRow(
-  #   column(
-  #     width = 6, align = "center",
-  #     tags$a(href = "/data/provinciali.csv", "Esporta dati provinciali")
-  #   ),
-  #   column(
-  #     width = 6, align = "center",
-  #     tags$a(href = "/data/comunali.csv", "Esporta dati comunali")
-  #     
-  #     )
-  # )
                   
 ))
