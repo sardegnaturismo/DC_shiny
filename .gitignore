@@ -11,5 +11,4 @@ test4.R
 packrat/lib*/
 data/*
 !data/.gitkeep
-internazionalization/*.bin
 Rprof.out
