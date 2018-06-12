@@ -159,5 +159,6 @@ get_month_range <- function(dataset = aggregate_movements, current_year){
   mapping <- unique(cbind(x$mese, x$mesestr_ita, x$anno_rif))
   mapping <- data.frame(mapping)
   names(mapping) <- c("mese", "mesestr", "anno")
+  mapping$mese <- factor(mapping$mese, levels = "1":"12")
   mapping <- mapping[order(mapping$anno, mapping$mese, decreasing = F), ]
 }
