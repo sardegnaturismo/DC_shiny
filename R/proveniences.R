@@ -75,13 +75,36 @@ get_current_coverage <- function(dataset, province_abbreviation = NULL, municipa
   
 }
 
+get_average_coverage <- function(dataset, province_abbreviation = NULL, municipality_code = NULL, current_year){
+  if (is.null(province_abbreviation)){
+    dataset <- filter(dataset, provincia == '')
+  }else if (!is.null(province_abbreviation)){
+    if(is.null(municipality_code)){
+      dataset <- filter(dataset, provincia == province_abbreviation & codicecomune == '')
+    }else{
+      if (substring(municipality_code, 1, 1) == "9"){
+        municipality_code = paste("0", municipality_code, sep = '')
+      }
+      dataset <- filter(dataset, provincia == province_abbreviation & codicecomune == municipality_code)
+    }
+  }
+  current_coverage <- filter(dataset, anno_rif == current_year) %>% select(c("mesestr_ita", "copertura")) 
+  current_coverage$copertura <- as.numeric(current_coverage$copertura)
+  avg_coverage <- round(mean(current_coverage$copertura), digits = 4)
+  m <- matrix(data = c(current_year, avg_coverage), nrow = 1, ncol = 2)
+  current_coverage <- data.frame(m)
+  names(current_coverage) <- c("mesestr_ita", "copertura")
+  current_coverage
+
+}
+
 
 get_coverage <- function(dataset, province_abbreviation = NULL, municipality_code = NULL, current_year){
 
   #### change time interval #####
   if (is.null(province_abbreviation)){
     #dataset <- filter(dataset, periodo == "anno1" & provincia == '') %>% arrange(desc(as.numeric(anno_rif)), desc(as.numeric(mese)))
-    dataset <- filter(dataset, anno_rif == current_year & provincia == '') %>% arrange(desc(as.numeric(mese)))
+    dataset <- filter(dataset, anno_rif == current_year & provincia == '') %>% arrange((as.numeric(mese)))
   }else{
     if (is.null(municipality_code)){
       dataset <- filter(dataset, anno_rif == current_year & provincia == province_abbreviation & codicecomune == '') %>% arrange(desc(as.numeric(mese)))
