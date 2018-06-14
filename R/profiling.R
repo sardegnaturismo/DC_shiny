@@ -22,7 +22,7 @@ get_accomodated_type <- function(dataset, province_abbreviation, municipality_co
                         accomodated_type = data.frame(matrix(nrow = 1, ncol = 2))
                         })
         names(accomodated_type) <- c("tipo_alloggiato", "arrivi")
-        accomodated_type <- accomodated_type %>% filter(!(tipo_alloggiato == ''))
+        accomodated_type <- accomodated_type %>% filter(!(tipo_alloggiato == '')) %>% filter(!(tipo_alloggiato == "ND"))
         accomodated_type = accomodated_type[order(accomodated_type$arrivi, decreasing = T), ]
         accomodated_type$arrivi = sapply(accomodated_type$arrivi, FUN = function(x){
           tot <- sum(accomodated_type$arrivi)        
