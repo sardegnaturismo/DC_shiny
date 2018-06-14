@@ -70,9 +70,15 @@ get_last_three_years <- function(dataset, province_abbreviation, municipality_co
         dataset <- dataset %>% filter(!grepl("^999$", codicenazione)) %>% filter(!grepl("9999", codicenazione))
         dataset <- filter_dataset(dataset, province_abbreviation, municipality_code, prov_pie_event, NULL, nation_bar_ev, region_bar_ev, NULL, lang_chosen)
         dataset$mese <- as.integer(dataset$mese)
-        mapping <- unique(cbind(dataset$mese, dataset$mesestr_ita))
+        ####################### complete months #################
+        all_months_num <- 1:12
+        all_months_txt <- c("Gennaio", "Febbraio", "Marzo","Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre")
+        mapping <- cbind(all_months_num, all_months_txt)
+        #mapping <- unique(cbind(dataset$mese, dataset$mesestr_ita))
         mapping_list <- mapping[,2]
         names(mapping_list) <- mapping[,1]
+        #########################################################
+        
         measure = tolower(measure)
         # res <- aggregate(dataset$tot_arrivi ~ dataset$mese + dataset$anno_rif, FUN = sum)
         dependent_variable <- dataset$tot_arrivi
@@ -95,6 +101,8 @@ get_last_three_years <- function(dataset, province_abbreviation, municipality_co
         #   }
         # }
         names(res) <- c("periodo", "mese", "anno", "intervallo", "movimenti")
+        res$mese <- as.integer(res$mese)
+        res <- res[order(res$anno, res$mese), ]
         out <- res %>% mutate(mese = mapping_list[mese])
  
         out
