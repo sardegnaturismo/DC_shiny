@@ -145,6 +145,7 @@ anno;Anno;Year
 mese;Mese;Month
 copertura;Copertura (%);Coverage (%)
 copertura_mese;Copertura del mese di;Coverage in month of
+copertura_anno;Copertura media del; Average coverage of 
 dettagli;Dettagli;Details
 chiudi;Chiudi;Close
 cerca;Cerca;Search
