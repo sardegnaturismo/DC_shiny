@@ -397,8 +397,9 @@ shinyServer(function(input, output, session) {
           print(selections)
           province_abbreviation <- selections[[1]]
           municipality_code <- selections[[2]]
-          coverage = get_current_coverage(coverage, province_abbreviation, municipality_code, (current_year))
-          mese = tr(tolower(coverage[[1]]), change$language)
+          coverage = get_average_coverage(coverage, province_abbreviation, municipality_code, (current_year))
+          # mese = tr(tolower(coverage[[1]]), change$language)
+          anno <- current_year
           copertura = coverage[[2]]
           print(paste("copertura is null: ", is.null(copertura)))
           if (!is.null(copertura) & copertura != '' & !is.na(copertura)){
@@ -407,7 +408,7 @@ shinyServer(function(input, output, session) {
           }else{
             copertura = "ND"
           }
-          res <- paste(tr("copertura_mese", change$language), mese, ":", copertura)
+          res <- paste(tr("copertura_anno", change$language), current_year, ":", copertura)
         })
         
         
@@ -422,7 +423,7 @@ shinyServer(function(input, output, session) {
             coverage$mese <- sapply(coverage$mese, FUN = function(x){tr(tolower(x), change$language)})
             names(coverage) = c(tr("anno", change$language), tr("mese", change$language), tr("copertura", change$language))
             coverage
-        }, options = list(lengthMenu = c(3, 6, 12), pageLength = 3, columnDefs = list(list(targets = "_all", searchable = FALSE)), 
+        }, options = list(lengthMenu = c(3, 6, 12), pageLength = 3, columnDefs = list(list(targets = "_all", searchable = FALSE)), ordering = F, 
                           autoWidth = FALSE, language = list(search = paste(tr("cerca", change$language)), lengthMenu = tr("mostra_elementi", change$language),
                           info = "", paginate = list("next" = tr("successivo", change$language), previous = tr("precedente", change$language)))))
         
@@ -788,7 +789,7 @@ shinyServer(function(input, output, session) {
                 print("Accomodated type event:")
                 print(accomodated_ev)
                 
-          
+                
                 age_range <- get_age_range(aggregate_web_data, province_abbreviation, municipality_code, ev, profile_ev, nation_ev, region_ev, accomodated_ev, change$language)
                 print(age_range)
                 if (nrow(age_range) == 0 | all(is.na(age_range$eta))){
@@ -816,6 +817,9 @@ shinyServer(function(input, output, session) {
                 province_abbreviation <- NULL
                 municipality_code <- NULL
                 month_range <- get_month_range(aggregate_movements, current_year)
+                months <- month_range$mesestr
+                print("months form months range")
+                print(months)
                 
                 #selections <- get_map_selections(data$clickedProvince[["id"]], data$clickedMunicipality[["id"]], sardinian_provinces)
                 selections <- map$selected_params
@@ -828,6 +832,8 @@ shinyServer(function(input, output, session) {
                 }else{
                   measure = input$measure
                 }
+                print("*** measure inside line comparison")
+                print(measure)
                 
                 ### plotly event from provenience pie chart ####
                 ev <- prov_pie$ev
@@ -882,7 +888,7 @@ shinyServer(function(input, output, session) {
                 mlist <- factor(month_range$mesestr, levels = month_range$mesestr)
                 print("*** mlist ***")
                 print(mlist)
-                reference_month_list <- translate_vector(mlist, change$language)
+                reference_month_list <- translate_vector(months, change$language)
                 
                 print(paste("Lunghezza mesi: ", length(reference_month_list)))
                 #print(m)
@@ -892,7 +898,7 @@ shinyServer(function(input, output, session) {
                 
                 
                 plot_title <- tr("andamento_triennio", change$language)
-                p <- plot_ly(trends1, x = ~m1, y = ~movimenti, name = paste(y_axix_title, intervallo1), type = 'scatter', mode = 'lines+markers',  text = ~paste(mese, anno, "<br>", measure, ":", movimenti ), hoverinfo = 'text') %>%
+                p <- plot_ly(trends1, x = ~m1, y = ~movimenti, name = paste(y_axix_title, intervallo1), type = 'scatter', mode = 'lines+markers',  text = ~paste(tr(tolower(mese), change$language), anno, "<br>", measure, ":", movimenti ), hoverinfo = 'text') %>%
                         add_trace(data = trends2, x = ~m2, y = ~movimenti, name = paste(y_axix_title, intervallo2), mode = 'lines+markers') %>%
                         add_trace(data = trends3, x = ~m3, y = ~movimenti, name = paste(y_axix_title, intervallo3), mode = 'lines+markers') %>%                        
                         layout(title = plot_title,
