@@ -12,3 +12,4 @@ packrat/lib*/
 data/*
 !data/.gitkeep
 Rprof.out
+st_dcshiny.Rproj
