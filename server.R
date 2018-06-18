@@ -818,7 +818,7 @@ shinyServer(function(input, output, session) {
                 municipality_code <- NULL
                 month_range <- get_month_range(aggregate_movements, current_year)
                 months <- month_range$mesestr
-                print("months form months range")
+                print("months from month range")
                 print(months)
                 
                 #selections <- get_map_selections(data$clickedProvince[["id"]], data$clickedMunicipality[["id"]], sardinian_provinces)
@@ -866,18 +866,21 @@ shinyServer(function(input, output, session) {
                 
                 #trends1 <- filter(trends, periodo == "anno1") ### last year
                 trends1 <- filter(trends, anno == current_year) ### last year
+                trends1 <- fill_months(trends1, months)
                 mesi1 <- translate_vector(trends1$mese, change$language)
                 m1 <- factor(mesi1, levels = mesi1)
                 #intervallo1 <- trends1$intervallo[1]
                 intervallo1 <- current_year
                 #trends2 <- filter(trends, periodo == "anno2")
                 trends2 <- filter(trends, anno == (current_year - 1))
+                trends2 <- fill_months(trends2, months)
                 mesi2 <- translate_vector(trends2$mese, change$language) #past years
                 m2 <- factor(mesi2, levels = mesi2)
                 #intervallo2 <- trends2$intervallo[1]
                 intervallo2 <- current_year - 1
                 #trends3 <- filter(trends, periodo == "anno3")
                 trends3 <- filter(trends, anno == (current_year - 2))
+                trends3 <- fill_months(trends3, months)
                 mesi3 <- translate_vector(trends3$mese, change$language) ### past years
                 m3 <- factor(mesi3, levels = mesi3)
                 #intervallo3 <- trends3$intervallo[1]
