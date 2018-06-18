@@ -162,3 +162,30 @@ get_month_range <- function(dataset = aggregate_movements, current_year){
   mapping$mese <- factor(mapping$mese, levels = "1":"12")
   mapping <- mapping[order(mapping$anno, mapping$mese, decreasing = F), ]
 }
+
+fill_months <- function(dataset, months){
+  dataset_rows <- nrow(dataset)
+  dataset_cols <- ncol(dataset)
+  tmp_matrix <- matrix(nrow = 1, ncol = dataset_cols)
+  tmp_dataset <- data.frame(tmp_matrix)
+  names(tmp_dataset) = names(dataset)
+  if (dataset_rows == 12){
+    return(dataset)
+  }else{
+    i = 1
+    for (m in months){
+      tmp_dataset[i, ] = dataset[1, ]
+      tmp_dataset[i, "mese"] = m
+      tmp_dataset[i, "movimenti"] = 0
+      i = i + 1
+    }
+    uncompleted_months <- dataset$mese
+    for (um in uncompleted_months){
+      tmp_dataset[tmp_dataset$mese == um, "movimenti"] = dataset[dataset$mese == um, "movimenti"]
+    }
+    
+  }
+  
+  tmp_dataset
+  
+}
