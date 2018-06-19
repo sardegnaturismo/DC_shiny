@@ -23,7 +23,7 @@ shinyUI(fluidPage(
    includeCSS("www/DO.css"),
    tags$script(src="https://cdn.plot.ly/plotly-latest.min.js"),
    includeScript("www/js/redraw.js"),
-   tags$head(tags$script(src="if-resize.js")),
+   includeScript("www/js/if-resize.js"),
    useShinyjs(),
    extendShinyjs(text = "shinyjs.resetProfileClick = function() { Shiny.onInputChange('.clientValue-plotly_click-sex_pie', 'null'); }"),
    extendShinyjs(text = "shinyjs.resetProvenienceClick = function() { Shiny.onInputChange('.clientValue-plotly_click-prov_pie', 'null'); }"),
