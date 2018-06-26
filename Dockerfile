@@ -24,7 +24,7 @@ LABEL \
     com.shiny-server.is-beta="false" \
     com.shiny-server.is-production="true" \
     com.shiny-server.version="1.0" \
-    com.shiny-server.release-date="2017-10-06"
+    com.shiny-server.release-date="2018-06-26"
 
 # =====================================================================
 # R Server
@@ -97,8 +97,13 @@ RUN wget --no-verbose https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubu
     rm -f version.txt ss-latest.deb
 
 # Download, build and install R packages
-RUN R -e "install.packages(c('shiny','rmarkdown','shinyjs','leaflet','rgdal','plotly','data.table','dplyr','htmltools','crosstalk','V8','RColorBrewer'))" && \
+RUN R -e "install.packages(c('shiny','rmarkdown','shinyjs','leaflet','plotly','data.table','dplyr','htmltools','crosstalk','V8','RColorBrewer'))" && \
     rm -rf /tmp/*
+    
+RUN wget --no-verbose https://cran.r-project.org/src/contrib/Archive/leaflet/leaflet_1.1.0.tar.gz
+RUN R CMD INSTALL leaflet_1.1.0.tar.gz
+RUN wget --no-verbose https://cran.r-project.org/src/contrib/Archive/rgdal/rgdal_1.2-13.tar.gz
+RUN R CMD INSTALL rgdal_1.2-13.tar.gz    
 
 # Install latest shiny from GitHub and copy examples
 # RUN R -e "devtools::install_github('rstudio/shiny')" && \
