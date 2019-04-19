@@ -169,13 +169,13 @@ shinyUI(fluidPage(
       width = 4, offset = 2, align = "center",
       uiOutput("export_prov_button")
       #downloadButton("downloadProv", "Esporta dati provinciali")
-    ),
-    column(
-      width = 4, align = "center",
-      uiOutput("export_com_button")
-      #downloadButton("downloadCom", "Esporta dati comunali")
-
-      ),br(),br(),br(),br()
+    )
+    # column(
+    #   width = 4, align = "center",
+    #   uiOutput("export_com_button")
+    #   #downloadButton("downloadCom", "Esporta dati comunali")
+    # 
+    #   ),br(),br(),br(),br()
   )
                   
 ))
