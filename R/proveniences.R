@@ -170,6 +170,7 @@ get_provenience_by_region <- function(dataset, province_abbreviation, municipali
         italians <- italians_all %>% filter(!grepl("Italia", descrizione)) %>% filter(!grepl("Estero", descrizione))
         
         dependent_variable <- italians$tot_arrivi
+        measure = tolower(measure)
         if (!is.null(measure) || measure != "") {
                 if ((measure == 'presenze') || (measure == "presences")){
                         dependent_variable <- italians$tot_presenze
