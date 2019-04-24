@@ -49,8 +49,11 @@ get_age_range <- function(dataset, province_abbreviation, municipality_code, pro
         
         
         names(age_range) = c("fasciaeta", "arrivi")
+        age_range <- filter(age_range, fasciaeta != "")
         result <- age_range %>% mutate(fasciaeta = gsub("eta_", "", fasciaeta) %>% gsub("65\\+", ">65", .))
         result$fasciaeta = factor(x = result$fasciaeta, levels = result$fasciaeta)
+        result$fasciaeta = relevel(result$fasciaeta, "<15")
+        
         names(result) <- c("eta", "arrivi")
         result$arrivi = sapply(result$arrivi, FUN = function(x){
                 tot <- sum(result$arrivi) 
